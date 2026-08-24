@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Tracking Study</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ① Name Entry -->
+    <div id="name-screen">
+        <div id="name-card">
+            <div class="eye-icon">👁️</div>
+            <h1>Eye Tracking Study</h1>
+            <p>Please enter the child's name to begin</p>
+            <div class="input-wrap">
+                <input type="text" id="name-input" placeholder="Child's name…" autocomplete="off" />
+            </div>
+            <button id="name-submit-btn">Start Session →</button>
+        </div>
+    </div>
+
+    <!-- ② Loading -->
+    <div id="loading-screen" style="display:none;">
+        <div id="loading-card">
+            <div class="spinner"></div>
+            <p id="loading-text">Loading eye tracker…</p>
+            <div id="loading-bar-wrap"><div id="loading-bar"></div></div>
+            <p id="loading-sub">This takes 10–20 seconds on first load</p>
+        </div>
+    </div>
+
+    <!-- ③ App layout: sidebar + content -->
+    <div id="app-layout" style="display:none;">
+
+        <!-- SIDEBAR -->
+        <div id="sidebar">
+            <div id="sidebar-label">📷 Live Feed</div>
+            <div id="webcam-box">
+                <span id="webcam-placeholder">Waiting for camera…</span>
+            </div>
+            <div id="gaze-info">
+                <div class="gaze-row"><span class="gaze-label">X</span><span class="gaze-val" id="coord-x">—</span></div>
+                <div class="gaze-row"><span class="gaze-label">Y</span><span class="gaze-val" id="coord-y">—</span></div>
+                <div class="gaze-row"><span class="gaze-label">Side</span><span class="gaze-val" id="coord-zone">—</span></div>
+            </div>
+            <div id="slide-counter"></div>
+            <button id="recal-btn" style="display:none;">⟳ Recalibrate</button>
+        </div>
+    
+
+        <!-- CONTENT AREA -->
+        <div id="content-area">
+
+            <!-- Calibration (3 butterflies: left, center, right) -->
+            <div id="calibration-screen" style="display:none;">
+                <div id="calibration-message">
+                    <h2>🦋 Catch the Butterflies!</h2>
+                    <p>Click each butterfly <strong>8 times</strong> to catch it!</p>
+                    <div id="calibration-progress">0 / 9 caught</div>
+                </div>
+                <!-- 9 points spread across 3 rows for better 2D spatial coverage -->
+                <div class="cal-point" id="cal-bl" style="top:10%; left:10%"></div>
+                <div class="cal-point" id="cal-bc" style="top:10%; left:50%"></div>
+                <div class="cal-point" id="cal-br" style="top:10%; left:90%"></div>
+                <div class="cal-point" id="cal-left" style="top:50%; left:10%"></div>
+                <div class="cal-point" id="cal-mc" style="top:50%; left:50%"></div>
+                <div class="cal-point" id="cal-right" style="top:50%; left:90%"></div>
+                <div class="cal-point" id="cal-tl" style="top:90%; left:10%"></div>
+                <div class="cal-point" id="cal-tc" style="top:90%; left:50%"></div>
+                <div class="cal-point" id="cal-tr" style="top:90%; left:90%"></div>
+            </div>
+
+            <!-- Slides -->
+            <img id="slide-viewer" src="" alt="Slide" style="display:none;">
+
+            <!-- Only left/right halves — no top/bottom split needed -->
+            <div id="grid-overlay" style="display:none;">
+                <div class="half" id="half-left"></div>
+                <div class="half" id="half-right"></div>
+            </div>
+
+            <button id="next-btn" style="display:none;">Next →</button>
+        </div>
+    </div>
+
+    <script src="/node_modules/@tensorflow/tfjs/dist/tf.min.js"></script>
+    <script src="/node_modules/webgazer/dist/webgazer.js"></script>
+    <script src="tracker.js"></script>
+</body>
+</html>

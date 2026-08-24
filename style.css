@@ -1,0 +1,298 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body, html {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: #0a0a0a;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* ── Name screen ─────────────────────────────────────────────────────── */
+#name-screen {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #0f1b0f 0%, #0a0a1a 50%, #0f1b0f 100%);
+    z-index: 300000;
+}
+#name-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px; padding: 52px 56px; width: 420px;
+    text-align: center; backdrop-filter: blur(12px);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    animation: fadeUp 0.5s ease both;
+}
+@keyframes fadeUp {
+    from { opacity:0; transform: translateY(24px); }
+    to   { opacity:1; transform: translateY(0); }
+}
+.eye-icon { font-size: 3rem; margin-bottom: 16px; filter: drop-shadow(0 0 12px rgba(76,175,80,0.6)); }
+#name-card h1 { font-size: 1.7rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; margin-bottom: 10px; }
+#name-card > p { font-size: 1rem; color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+.input-wrap { margin-bottom: 20px; }
+#name-input {
+    width: 100%; padding: 16px 20px;
+    font-size: 1.1rem; font-family: 'Nunito', sans-serif; font-weight: 600;
+    color: #fff; background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 12px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s; caret-color: #4CAF50;
+}
+#name-input::placeholder { color: rgba(255,255,255,0.25); }
+#name-input:focus { border-color: #4CAF50; box-shadow: 0 0 0 3px rgba(76,175,80,0.2); }
+#name-submit-btn {
+    width: 100%; padding: 16px;
+    font-size: 1.1rem; font-family: 'Nunito', sans-serif; font-weight: 700;
+    color: #fff; background: linear-gradient(135deg, #4CAF50, #2e7d32);
+    border: none; border-radius: 12px; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 20px rgba(76,175,80,0.4);
+}
+#name-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(76,175,80,0.5); }
+
+/* ── Loading screen ──────────────────────────────────────────────────── */
+#loading-screen {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: #0a0a0a; z-index: 200000;
+}
+#loading-card { text-align: center; width: 360px; }
+.spinner {
+    width: 56px; height: 56px;
+    border: 5px solid rgba(255,255,255,0.08); border-top-color: #4CAF50;
+    border-radius: 50%; margin: 0 auto 28px;
+    animation: spin 0.85s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#loading-text { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 20px; min-height: 1.6em; }
+#loading-bar-wrap { width:100%; height:6px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden; margin-bottom:14px; }
+#loading-bar { height:100%; width:0%; background:linear-gradient(90deg,#4CAF50,#81C784); border-radius:99px; transition:width 0.4s ease; }
+#loading-sub { font-size:0.85rem; color:rgba(255,255,255,0.3); }
+
+/* ── App layout ──────────────────────────────────────────────────────── */
+#app-layout { width:100vw; height:100vh; overflow:hidden; }
+
+#sidebar {
+    width: 220px; min-width: 220px; height: 100vh;
+    background: #111;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column;
+    align-items: center; padding: 16px 12px; gap: 12px;
+    z-index: 50; position: relative;
+}
+#sidebar-label { font-size:0.75rem; font-weight:700; color:rgba(255,255,255,0.35); letter-spacing:1px; text-transform:uppercase; align-self:flex-start; }
+
+#webcam-box {
+    width:196px; height:147px; background:#1a1a1a;
+    border-radius:10px; border:1px solid rgba(255,255,255,0.1);
+    overflow:hidden; position:relative; flex-shrink:0;
+}
+#webcam-placeholder { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:0.75rem; color:rgba(255,255,255,0.25); text-align:center; padding:8px; }
+
+#gaze-info {
+    width:100%; background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px; padding:12px 14px;
+    display:flex; flex-direction:column; gap:8px;
+}
+.gaze-row { display:flex; justify-content:space-between; align-items:center; }
+.gaze-label { font-size:0.72rem; font-weight:700; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.5px; }
+.gaze-val { font-size:0.85rem; font-weight:700; color:#4CAF50; font-variant-numeric:tabular-nums; }
+
+#slide-counter {
+    width:100%;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:10px; padding:10px 14px;
+    font-size:0.85rem; font-weight:700; color:rgba(255,255,255,0.5);
+    text-align:center;
+}
+
+#recal-btn {
+    width:100%; padding:12px;
+    font-size:0.9rem; font-family:'Nunito',sans-serif; font-weight:700;
+    color:rgba(255,255,255,0.75); background:rgba(255,255,255,0.06);
+    border:1.5px solid rgba(255,255,255,0.15);
+    border-radius:10px; cursor:pointer;
+    transition:background 0.2s, color 0.2s, transform 0.15s;
+    margin-top:auto;
+}
+#recal-btn:hover { background:rgba(255,255,255,0.12); color:#fff; transform:translateY(-1px); }
+
+#content-area { flex:1; height:100vh; position:relative; overflow:hidden; background:#000; }
+#content-area.testing { cursor: pointer; }
+
+/* ── Calibration screen ──────────────────────────────────────────────── */
+#calibration-screen {
+    position:absolute; inset:0; background:#0d0d0d; z-index:100;
+}
+#calibration-message {
+    position:absolute; top:35%; left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center; color:#fff; pointer-events:none; z-index:101;
+}
+#calibration-message h2 { font-size:2rem; font-weight:800; margin-bottom:10px; }
+#calibration-message p  { font-size:1rem; color:rgba(255,255,255,0.5); line-height:1.7; }
+#calibration-progress   { margin-top:14px; font-size:1.1rem; font-weight:700; color:#f9c74f; }
+
+/* ── Butterfly calibration dot ───────────────────────────────────────── */
+.cal-point {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 102;
+    /* The butterfly is drawn as an emoji inside a pseudo-element */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.6rem;
+    user-select: none;
+    /* Gentle float animation */
+    animation: butterfly-float 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(249,199,79,0.8));
+    transition: transform 0.2s;
+}
+
+/* Each dot floats at a slightly different rhythm so they don't sync */
+/* Each dot floats at a slightly different rhythm and sits in its proper spot */
+#cal-bl { 
+    left: 10%; 
+    top: 10%;
+    animation-delay: 0s; 
+}
+
+#cal-mc { 
+    left: 50%; 
+    top: 50%;
+    animation-delay: 0.5s; 
+}
+
+#cal-br { 
+    left: 90%; 
+    top: 10%;
+    animation-delay: 1s; 
+}
+
+#cal-tl {
+    left: 10%; 
+    top: 90%; 
+    animation-delay: 0.25s; 
+}
+
+#cal-tr { 
+    left: 90%; 
+    top: 90%;
+    animation-delay: 0.75s; 
+}
+
+#cal-left { 
+    left: 10%; 
+    top: 50%;
+    animation-delay: 0.15s; 
+}
+
+#cal-right { 
+    left: 90%; 
+    top: 50%;
+    animation-delay: 0.65s; 
+}
+
+#cal-tc { 
+    left: 50%; 
+    top: 90%;
+    animation-delay: 0.35s; 
+}
+
+#cal-bc { 
+    left: 50%; 
+    top: 10%;
+    animation-delay: 0.85s; 
+}
+
+
+@keyframes butterfly-float {
+    0%,100% { transform: translate(-50%,-50%) translateY(0px)   rotate(-4deg); }
+    25%      { transform: translate(-50%,-50%) translateY(-12px) rotate(4deg); }
+    50%      { transform: translate(-50%,-50%) translateY(-6px)  rotate(-2deg); }
+    75%      { transform: translate(-50%,-50%) translateY(-16px) rotate(6deg); }
+}
+
+/* Wing-flap: scale X to simulate flapping */
+.cal-point::before {
+    content: '🦋';
+    display: block;
+    font-size: inherit;
+    animation: wing-flap 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes wing-flap {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0.6); }
+}
+
+/* On click: shrink and turn into a caught butterfly */
+.cal-point.clicked {
+    animation: butterfly-shrink 0.25s ease forwards !important;
+}
+@keyframes butterfly-shrink {
+    0%   { transform: translate(-50%,-50%) scale(1); }
+    50%  { transform: translate(-50%,-50%) scale(1.4); }
+    100% { transform: translate(-50%,-50%) scale(0.7); }
+}
+
+.cal-point.done {
+    opacity: 0.25;
+    animation: none !important;
+    cursor: default;
+    filter: none;
+}
+.cal-point.done::before { content: '🫙'; } /* caught in a jar */
+
+/* Click ripple */
+.cal-point::after {
+    content:'';
+    position:absolute; inset:0;
+    border-radius:50%;
+    animation: ripple-idle 1.5s ease-out infinite;
+    border: 2px solid rgba(249,199,79,0.5);
+}
+@keyframes ripple-idle {
+    0%   { transform:scale(1);   opacity:0.7; }
+    100% { transform:scale(2.2); opacity:0; }
+}
+.cal-point.done::after { display:none; }
+
+/* ── Slide viewer ────────────────────────────────────────────────────── */
+#slide-viewer {
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    object-fit:contain; z-index:1;
+}
+
+/* Left/right halves overlay — just for visual highlight feedback */
+#grid-overlay {
+    position:absolute; inset:0;
+    display:grid; grid-template-columns:50% 50%;
+    z-index:10; pointer-events:none;
+}
+.half {
+    border: 2px dashed rgba(255,255,255,0.12);
+    transition: background 0.15s;
+}
+.half.active { background: rgba(255,255,255,0.07); }
+
+/* ── Next button ─────────────────────────────────────────────────────── */
+#next-btn {
+    position:absolute; bottom:40px; right:40px;
+    padding:16px 34px;
+    font-size:1.05rem; font-family:'Nunito',sans-serif; font-weight:700;
+    z-index:9999;
+    background:linear-gradient(135deg,#4CAF50,#2e7d32);
+    color:#fff; border:none; border-radius:12px; cursor:pointer;
+    box-shadow:0 4px 20px rgba(76,175,80,0.45);
+    transition:transform 0.15s, box-shadow 0.15s;
+}
+#next-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(76,175,80,0.55); }
+

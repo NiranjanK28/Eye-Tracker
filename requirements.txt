@@ -1,0 +1,10 @@
+Node.js
+
+# In your project folder in terminal:
+npm install express cors sqlite3
+npm install webgazer
+
+sqlitebrowser.org
+
+download db browser for windows
+open db browser(SQLite) -> open database -> file -> export -> table as csv file
